@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login and Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f4f4f4;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"],
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login and Registration Page</h1>
+
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <input type="submit" value="Login">
+            <input type="button" value="Register" onclick="redirectToRegister()">
+        </form>
+    </div>
+
+    <script>
+        function redirectToRegister() {
+            window.location.href = './pkg/webui/register.html';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get input values
+            var username = document.getElementById('login-username').value;
+            var password = document.getElementById('login-password').value;
+
+            // Perform API call to server using fetch or XMLHttpRequest
+            // Example using fetch:
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(function(response) {
+                // Handle response from server
+                if (response.ok) {
+                    // Redirect or do something on successful login
+                    // window.location.href = '/dashboard';
+                    return response.json();
+                } else {
+                    // Handle login error
+                    alert('Login failed');
+                }
+            })
+            .catch(function(error) {
+                // Handle network error
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
